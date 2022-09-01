@@ -1,0 +1,16 @@
+[Unit]
+Description=Call youtube_dl on each line of file
+After=networking.service
+[Service]
+Type=simple
+User=vdr
+Group=vdr
+TimeoutStartSec=0
+Restart=on-failure
+RestartSec=30s
+#ExecStartPre=
+ExecStart=/var/lib/vdr/youtube-dl/dl_script /var/lib/vdr/youtube-dl/fifo_file
+SyslogIdentifier=dl_script
+#ExecStop=
+[Install]
+WantedBy=multi-user.target

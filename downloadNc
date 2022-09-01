@@ -1,0 +1,20 @@
+#!/bin/bash
+
+MAINF=/var/lib/vdr/youtube-dl
+pipe=$MAINF/pipe
+fifo_file=$MAINF/fifo_file
+DL_SCRIPT=$MAINF/dl_script
+
+killall nc
+nc -k -l 6666 > $pipe &
+#bash $DL_SCRIPT $fifo_file  &
+while true
+do
+  if read line <$pipe; then
+#   echo "$line"
+    {
+      flock -x 3
+      echo "$line" >&3
+    } 3>> $fifo_file
+  fi
+done

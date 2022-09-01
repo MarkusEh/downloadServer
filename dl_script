@@ -1,0 +1,17 @@
+#!/bin/bash
+
+downloadFolder=/mnt/md0/vdr/download/new
+#fifoFile=$PWD/$1
+
+while true
+do
+  if [ -s "$1" ]; then
+    line=`head -1 $1`
+#   echo "$line"
+    flock "$1" sed -i~ 1d "$1"
+    cd "$downloadFolder"
+    /usr/local/bin/youtube-dl --no-color --no-call-home --no-progress --write-thumbnail --no-mtime "$line" >> /var/lib/vdr/youtube-dl/dl_script.out 2>&1
+  else
+    sleep 5
+  fi
+done

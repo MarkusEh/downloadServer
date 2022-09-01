@@ -1,0 +1,17 @@
+[Unit]
+Description=fill file where videos will be downloaded, with nc
+After=networking.service
+After=dl_script.service
+[Service]
+Type=simple
+User=vdr
+Group=vdr
+TimeoutStartSec=0
+Restart=on-failure
+RestartSec=30s
+#ExecStartPre=
+ExecStart=/var/lib/vdr/youtube-dl/downloadNc
+SyslogIdentifier=downloadNc
+#ExecStop=
+[Install]
+WantedBy=multi-user.target
